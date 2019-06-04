@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$nameBd = "naf";
+$nameBd = "projeto_naf";
 
 //conectando com o localhost - mysql
 $conexao = mysqli_connect($servername, $username, $password, $nameBd);
