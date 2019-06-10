@@ -1,6 +1,7 @@
 <html>
 
 <head>
+  
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="../Projeto NAF/node_modules/jquery/src/jquery.js"></script>
         <!-- Bootstrap core CSS -->
@@ -82,15 +83,9 @@
    
  </script>
 
-
-
-
-
-
 </head>
 <body>
-        
-
+    
 
 <!-- Abas nav -->
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -99,13 +94,16 @@
           <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#perfil" role="tab" aria-controls="profile" aria-selected="false">Cadastrar Usuário</a>
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#user" role="tab" aria-controls="profile" aria-selected="false">Cadastrar Usuário</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Cadastrar Serviço</a>
+          <a class="nav-link" id="messages-tab" data-toggle="tab" href="#doc" role="tab" aria-controls="messages" aria-selected="false">Cadastrar Serviço</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Configurações</a>
+          <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Atendentes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="clientes-tab" data-toggle="tab" href="#clientes" role="tab" aria-controls="clientes" aria-selected="false">Clientes</a>
         </li>
       </ul>
       
@@ -119,7 +117,7 @@
 </div>
 
         </div>
-        <div class="tab-pane" id="perfil"  align-items= "center" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane" id="user"  align-items= "center" role="tabpanel" aria-labelledby="profile-tab">
             
                 <form style="margin-right: 10px;margin-left: 500px; margin-top: 50px;" id="cadastro" name="cadastro" method="post" action="php/formUser.php">
                     <div >
@@ -137,39 +135,87 @@
                       <label for="exampleInputPassword1">Senha</label>
                       <input type="password" style="width:300px;font-size: 13px" class="form-control" name="senha" id="senha">
                     </div>
-          
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Confirmar senha</label>
-                        <input type="password" style="width:300px;font-size: 13px" class="form-control" name="confsenha" id="confsenha"" >
-                      </div>
-          
-                    
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+   
+                   <button type="submit" class="btn btn-primary">Cadastrar</button>
                   </form>
         
-        
-        
-        
+       
         </div>
-        <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+        <div class="tab-pane" id="doc" role="tabpanel" aria-labelledby="messages-tab">
 
-                <form style="margin-right: 10px;margin-left: 500px; margin-top: 50px;" id="cadastro" name="cadastro" method="post" action="php/formUser.php">
+                <form style="margin-right: 10px;margin-left: 500px; margin-top: 50px;" id="documentos" name="documentos" method="post" action="php/formdoc.php">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Tipo </label>
-                        <input type="text" style="width:300px;font-size: 13px" class="form-control" name="tipo" id="tipo" aria-describedby="emailHelp" >
+                        <label >Nome </label>
+                        <input type="text" style="width:300px;font-size: 13px" class="form-control" name="nome" id="nome"  >
                         
                       </div>
             
                       <div class="form-group">
                           <label for="exampleFormControlFile1">Anexar documento</label>
-                          <input type="file" style="width:300px;font-size: 13px" class="form-control-file" id="exampleFormControlFile1">
+                          <input type="file" style="width:300px;font-size: 13px" class="form-control-file" name="arquivo" id="arquivo">
                         </div>
                     
                     <button type="submit" class="btn btn-primary">Cadastrar</button>
                   </form>
 
         </div>
-        <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">...</div>
+
+        <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+          <?php
+           include("php/conexao.php");
+
+          $sql = "SELECT nome FROM atendente";
+          $q = mysqli_query($conexao,$sql);
+          $linha = mysqli_fetch_assoc($q);
+          $total = mysqli_num_rows($q);
+          if($total > 0) {
+            // inicia o loop que vai mostrar todos os dados
+            do {
+    ?>
+                <p style="margin-right: 50px;margin-left: 50px; margin-top: 20px;"><?=$linha['nome']?> </p>
+    <?php
+            // finaliza o loop que vai mostrar os dados
+            }while($linha = mysqli_fetch_assoc($q));
+        // fim do if 
+        }
+
+          ?>
+ 
+        </div>
+
+        <div class="tab-pane" id="clientes" role="tabpanel" aria-labelledby="clientes-tab">
+          <?php
+           include("php/conexao.php");
+
+          $sql = "SELECT nome, telefone, email FROM cliente";
+          $q = mysqli_query($conexao,$sql);
+          $linha = mysqli_fetch_assoc($q);
+          $total = mysqli_num_rows($q);
+?>
+          
+
+
+<?php
+          if($total > 0) {
+            
+            // inicia o loop que vai mostrar todos os dados
+            do {
+    ?>
+
+
+                <p style="margin-right: 50px;margin-left: 50px; margin-top: 20px;"><?=$linha['nome']?> / <?=$linha['telefone']?> / <?=$linha['email']?></p>
+                </table>
+    <?php
+            // finaliza o loop que vai mostrar os dados
+            }while($linha = mysqli_fetch_assoc($q));
+        // fim do if 
+        }
+
+          ?>
+         
+
+
+        </div>
       </div>
 
 
